@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EcoPoly — Planetary Development</title>
+<style>
+:root{color-scheme:dark;--bg:#10231d;--panel:#18352b;--line:#345447;--text:#eff8f1;--muted:#b4c8bb;--green:#32a879;--gold:#f2bd53}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#244d3d,#0d1c18 70%);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:900px;margin:auto;padding:22px 16px 40px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--muted);font-weight:800}.brand{font-size:32px;font-weight:950;letter-spacing:-1px}.brand span{color:#50d49b}.round{background:var(--panel);border:1px solid var(--line);padding:9px 13px;border-radius:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0}.stat,.panel{background:linear-gradient(145deg,#1a392e,#142b23);border:1px solid var(--line);border-radius:14px;padding:13px}.stat small{display:block;color:var(--muted)}.stat strong{font-size:22px;font-variant-numeric:tabular-nums}
+.health{margin-bottom:16px}.healthhead{display:flex;justify-content:space-between;gap:10px;font-weight:750}.bar{height:13px;background:#344a40;border-radius:30px;overflow:hidden;margin:9px 0 5px}.fill{height:100%;width:70%;background:#35b77b;transition:width .3s}.healthfoot{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.threshold{color:#f4ca72}
+h2{font-size:14px;letter-spacing:.7px;margin:18px 0 9px}.board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;padding:7px;background:#284b3d;border:3px solid #426c57;border-radius:15px;box-shadow:0 8px 0 #091711}
+.tile{min-height:83px;border-radius:8px;padding:5px 3px;display:flex;flex-direction:column;justify-content:space-between;text-align:center;font-size:10px;line-height:1.15;color:#183026;border:1px solid #9aafa0;position:relative}.tile .emoji{font-size:19px}.tile .name{font-weight:850}.tile .price{font-size:9px}.tile.harm{background:#f1d9ce}.tile.good{background:#d4eddd}.tile.special{background:#dce5f2}.tile.current{outline:3px solid var(--gold);outline-offset:-3px}.owner{font-size:9px;font-weight:900}.tokens{font-size:13px;min-height:14px}
+.center{grid-column:2/6;grid-row:2/6;background:linear-gradient(145deg,#24513e,#367858);border-radius:10px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:12px;min-height:170px}.globe{font-size:42px}.center h1{font-size:22px;letter-spacing:4px;margin:3px}.center p{font-size:11px;line-height:1.5;margin:3px;color:#d9eee0}.dice{font-size:26px;margin-top:8px}
+.action{margin-top:15px;border-left:4px solid var(--gold)}.action h3{margin:0 0 6px;font-size:17px}.action p{margin:0;color:var(--muted);line-height:1.5;font-size:13px}.buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}button{border:1px solid #567365;background:#234537;color:var(--text);border-radius:10px;padding:10px 14px;font-weight:750;cursor:pointer}button:hover{filter:brightness(1.15)}button:disabled{opacity:.45;cursor:not-allowed}.primary{background:#16865e;border-color:#35b783}.portfolio{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.portfolio .panel{font-size:12px;line-height:1.7}.portfolio h3{font-size:13px;margin:0 0 6px}.muted{color:var(--muted)}.log{max-height:140px;overflow:auto;font-size:12px;line-height:1.5}.log div{padding:5px 0;border-bottom:1px solid #345447}.bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;font-size:11px;color:var(--muted)}
+@media(max-width:520px){main{padding:15px 10px}.tile{min-height:68px;font-size:9px}.tile .emoji{font-size:16px}.center{min-height:130px}.center h1{font-size:17px}.stat strong{font-size:18px}.portfolio{grid-template-columns:1fr}}
+</style>
+</head>
+<body><main>
+<header class="top"><div><div class="eyebrow">PLANETARY DEVELOPMENT SIMULATOR</div><div class="brand">🌎 ECO<span>POLY</span></div></div><div class="round">ROUND <strong id="round">1 / 10</strong></div></header>
+<section class="stats"><div class="stat"><small>Your capital</small><strong id="cash">$1,500</strong></div><div class="stat"><small>Your developments</small><strong id="assets">0</strong></div><div class="stat"><small>Planet health</small><strong id="health">70%</strong></div></section>
+<section class="panel health"><div class="healthhead"><span>🌱 Global environmental health</span><strong id="healthLabel">Stable</strong></div><div class="bar"><div class="fill" id="healthBar"></div></div><div class="healthfoot"><span>0% · Ecological collapse</span><span class="threshold">70% minimum to win</span><span>100% · Thriving</span></div></section>
+<h2>THE DEVELOPMENT BOARD</h2><section class="board" id="board"><div class="center" id="center"><div class="globe">🌍</div><h1>ECO POLY</h1><p>BUILD YOUR ECONOMY.<br>PROTECT YOUR PLANET.</p><p id="centerInfo">10 rounds · You vs. AI</p><div class="dice" id="dice">🎲 🎲</div></div></section>
+<section class="panel action"><h3 id="actionTitle">Welcome, developer!</h3><p id="actionText">Roll the dice to begin. Harmful industries generate recurring income at the start of each owner turn. Keep planetary health at or above 70% to qualify for victory.</p><div class="buttons" id="actionButtons"><button class="primary" id="roll">🎲 Roll dice</button></div></section>
+<section class="portfolio"><div class="panel"><h3>🔵 Your portfolio</h3><div id="youPortfolio" class="muted">No developments yet.</div></div><div class="panel"><h3>🔴 AI portfolio</h3><div id="aiPortfolio" class="muted">No developments yet.</div></div></section>
+<section class="panel" style="margin-top:12px"><h3 style="font-size:13px;margin:0 0 7px">📜 Development history</h3><div id="log" class="log" aria-live="polite"></div></section>
+<div class="bottom"><span>You vs. AI · 10 rounds · Local browser game</span><button id="restart">↻ Restart game</button></div>
+<p class="muted" style="font-size:11px;line-height:1.5">Environmental impacts are simplified game mechanics, not scientific lifecycle assessments. In particular, a Dyson sphere is a speculative megastructure; nuclear, hydrogen, data-center, mining, and aviation impacts depend on design and energy sources.</p>
+</main>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const spaces=[
+{name:'START',e:'🏁',t:'start'},
+{name:'Factories',e:'🏭',t:'harm',p:150,h:-7,r:35,inc:100,desc:'Industrial production can generate revenue while increasing emissions.'},
+{name:'Community Chest',e:'🎁',t:'event'},
+{name:'Deforestation',e:'🪓',t:'harm',p:120,h:-9,r:30,inc:75,desc:'Clearing forests damages habitats and reduces carbon storage.'},
+{name:'AI Data Center',e:'🖥️',t:'harm',p:200,h:-6,r:45,inc:125,desc:'Large electricity and cooling demands add environmental pressure.'},
+{name:'Environmental Tax',e:'💸',t:'tax'},
+{name:'Mining',e:'⛏️',t:'harm',p:170,h:-8,r:40,inc:90,desc:'Resource extraction can disrupt ecosystems and landscapes.'},
+{name:'Chance',e:'❔',t:'event'},
+{name:'Reforestation',e:'🌳',t:'good',p:300,h:10,r:55,desc:'Restoring forests supports biodiversity and carbon sequestration.'},
+{name:'Nuclear Power Plant',e:'☢️',t:'good',p:400,h:9,r:65,desc:'Nuclear power is low-carbon during operation, with waste and safety tradeoffs.'},
+{name:'Community Chest',e:'🎁',t:'event'},
+{name:'Hydrogen Generator',e:'💧',t:'good',p:350,h:8,r:60,desc:'Hydrogen can help hard-to-electrify sectors when produced using clean energy.'},
+{name:'Mining',e:'⛏️',t:'harm',p:170,h:-8,r:40,inc:90,desc:'Resource extraction can disrupt ecosystems and landscapes.'},
+{name:'Chance',e:'❔',t:'event'},
+{name:'Electric Planes',e:'✈️',t:'good',p:450,h:8,r:70,desc:'Electric aviation may reduce emissions on suitable short routes.'},
+{name:'Factories',e:'🏭',t:'harm',p:150,h:-7,r:35,inc:100,desc:'Industrial production can generate revenue while increasing emissions.'},
+{name:'Community Chest',e:'🎁',t:'event'},
+{name:'AI Data Center',e:'🖥️',t:'harm',p:200,h:-6,r:45,inc:125,desc:'Large electricity and cooling demands add environmental pressure.'},
+{name:'Dyson Sphere',e:'☀️',t:'good',p:650,h:15,r:100,desc:'A speculative stellar-energy megastructure with an enormous investment cost.'}
+];
+const coords=[[6,6],[5,6],[4,6],[3,6],[2,6],[1,6],[1,5],[1,4],[1,3],[1,2],[1,1],[2,1],[3,1],[4,1],[5,1],[6,1],[6,2],[6,3],[6,4],[6,5]];
+let players,health,turn,round,finished,logItems,waiting=false;
+const fmt=n=>'$'+Math.round(n).toLocaleString('en-US');
+function log(s){logItems.unshift(s);logItems=logItems.slice(0,22);$('log').innerHTML=logItems.map(x=>'<div>'+x+'</div>').join('')}
+function init(){players=[{name:'You',cash:1500,pos:0,owned:[],token:'🔵'},{name:'AI',cash:1500,pos:0,owned:[],token:'🔴'}];health=70;turn=0;round=1;finished=false;waiting=false;logItems=[];log('🌎 The game begins. Both players start with $1,500.');render();setAction('Your turn begins!','Roll the dice. Invest in developments, collect rent, and keep the planet healthy.',[['🎲 Roll dice',roll,true]])}
+function setAction(title,desc,buttons){$('actionTitle').textContent=title;$('actionText').textContent=desc;$('actionButtons').innerHTML='';buttons.forEach(([label,fn,primary])=>{let b=document.createElement('button');b.textContent=label;if(primary)b.className='primary';b.onclick=fn;$('actionButtons').appendChild(b)})}
+function render(){
+$('round').textContent=Math.min(round,10)+' / 10';$('cash').textContent=fmt(players[0].cash);$('assets').textContent=players[0].owned.length;$('health').textContent=Math.round(health)+'%';$('healthBar').style.width=health+'%';$('healthBar').style.background=health<30?'#d34d43':health<70?'#d6a33e':'#35b77b';$('healthLabel').textContent=health<20?'CRITICAL':health<70?'Below victory threshold':'Victory eligible';$('centerInfo').textContent='Round '+round+' · '+(turn===0?'Your move':'AI move');
+$('youPortfolio').textContent=players[0].owned.length?players[0].owned.map(i=>spaces[i].e+' '+spaces[i].name).join(' · '):'No developments yet.';const youIncome=players[0].owned.reduce((v,i)=>v+(spaces[i].inc||0),0);$('youPortfolio').textContent+=(youIncome?'\n💵 '+fmt(youIncome)+' income per turn':'');$('aiPortfolio').textContent=players[1].owned.length?players[1].owned.map(i=>spaces[i].e+' '+spaces[i].name).join(' · '):'No developments yet.';const aiIncome=players[1].owned.reduce((v,i)=>v+(spaces[i].inc||0),0);$('aiPortfolio').textContent+=(aiIncome?'\n💵 '+fmt(aiIncome)+' income per turn':'');
+const board=$('board');board.querySelectorAll('.tile').forEach(x=>x.remove());spaces.forEach((s,i)=>{let d=document.createElement('div');d.className='tile '+(s.t==='harm'?'harm':s.t==='good'?'good':'special');d.style.gridColumn=coords[i][0];d.style.gridRow=coords[i][1];let owner=players.findIndex(p=>p.owned.includes(i));let price=s.p?fmt(s.p):s.t==='start'?'Collect $200':s.t==='tax'?'Pay $100':'Event';d.innerHTML='<span class="emoji">'+s.e+'</span><span class="name">'+s.name+'</span><span class="price">'+price+'</span><span class="owner">'+(owner===0?'🔵 YOU':owner===1?'🔴 AI':'')+'</span><span class="tokens">'+players.filter(p=>p.pos===i).map(p=>p.token).join('')+'</span>';if(players.some(p=>p.pos===i))d.classList.add('current');board.appendChild(d)})
+}
+function endGame(reason,eligible){finished=true;let scores=players.map(p=>p.cash+p.owned.reduce((v,i)=>v+spaces[i].p,0)+health*10);let winner=eligible?(scores[0]>scores[1]?'You':scores[0]<scores[1]?'AI':'Tie'):'No one';let result=eligible?(winner==='Tie'?'It is a tie!':winner+' wins!'):'NO WINNER — minimum planetary health was not met.';log('🏁 Game over. '+reason);setAction(eligible?'🏆 GAME OVER':'🌍 NO QUALIFIED WINNER',reason+' Final health: '+Math.round(health)+'%. '+(eligible?'Your score: '+fmt(scores[0])+'. AI score: '+fmt(scores[1])+'. '+result:'Both players are disqualified from victory because planetary health is below 70%.'),[['↻ Play again',init,true]]);$('centerInfo').textContent=result;$('center').querySelector('.globe').textContent=eligible?'🏆':'🌍';render()}
+function checkCollapse(){if(health<=0){endGame('Ecological collapse: planetary health reached 0%.',false);return true}return false}
+function collectIncome(p){
+ const income=p.owned.reduce((total,i)=>total+(spaces[i].inc||0),0);
+ if(income>0){p.cash+=income;log('💵 '+p.name+' collected '+fmt(income)+' in recurring industry income this turn.');render()}
+}
+function finishTurn(){
+ if(finished)return;
+ if(checkCollapse())return;
+ if(turn===0){turn=1;collectIncome(players[1]);render();setAction('🤖 AI is making its move...','The AI is considering its investment strategy.',[]);setTimeout(aiTurn,650)}
+ else{turn=0;round++;if(round>10){if(health>=70)endGame('Ten rounds elapsed and the planet met the 70% minimum.',true);else endGame('Ten rounds elapsed, but planetary health finished below the mandatory 70% minimum.',false);return}collectIncome(players[0]);render();setAction('Your turn!','Round '+round+'. Remember: money alone cannot win the game.',[['🎲 Roll dice',roll,true]])}
+}
+function buy(p,i){
+ const s=spaces[i];if(p.cash<s.p){setAction('Not enough capital','You need '+fmt(s.p)+' to purchase this development.',[['Continue',finishTurn,true]]);return}
+ p.cash-=s.p;p.owned.push(i);health=Math.max(0,Math.min(100,health+s.h));log((s.h>0?'🌱':'⚠️')+' '+p.name+' purchased '+s.name+' for '+fmt(s.p)+'. Planet health '+(s.h>0?'+':'')+s.h+'.');render();
+ if(checkCollapse())return;
+ setAction('Development acquired!',p.name+' purchased '+s.name+'. Planetary health changed by '+(s.h>0?'+':'')+s.h+' points.',[['Continue',finishTurn,true]])
+}
+function move(p,steps){let old=p.pos;p.pos=(p.pos+steps)%spaces.length;if(p.pos<old){p.cash+=200;log('🏁 '+p.name+' passed START and collected $200.')}render();resolve(p)}
+function resolve(p){
+ const s=spaces[p.pos],owner=players.findIndex(x=>x.owned.includes(p.pos));
+ if(s.t==='start'){p.cash+=200;log('🏁 '+p.name+' landed on START and collected $200.');render();setAction('START bonus','Collect $200 for landing on START.',[['Continue',finishTurn,true]]);return}
+ if(s.t==='harm'||s.t==='good'){
+  if(owner===-1){let can=p.cash>=s.p;setAction(s.e+' '+s.name,s.desc+' Price: '+fmt(s.p)+'. Planetary impact: '+(s.h>0?'+':'')+s.h+' points. Rent: '+fmt(s.r)+'.',[[can?'Buy for '+fmt(s.p):'Cannot afford',()=>buy(p,p.pos),can],['Pass',finishTurn,false]])}
+  else if(owner!==players.indexOf(p)){p.cash-=s.r;players[owner].cash+=s.r;log('🏠 '+p.name+' paid '+fmt(s.r)+' rent to '+players[owner].name+'.');render();setAction('Rent paid: '+fmt(s.r),'You landed on '+s.name+', owned by '+players[owner].name+'.',[['Continue',finishTurn,true]])}
+  else setAction('Your development!','You already own '+s.name+'. No rent due.',[['Continue',finishTurn,true]])
+ }else if(s.t==='tax'){p.cash-=100;log('💸 '+p.name+' paid $100 environmental tax.');render();setAction('Environmental tax','You paid $100.',[['Continue',finishTurn,true]])}
+ else if(s.t==='event'){let events=[{v:120,m:'💰 Sustainability grant: collect $120.'},{v:-100,m:'🌪️ Extreme weather damages your finances: pay $100.'},{v:0,h:4,m:'🌱 Community cleanup: planet health +4.'},{v:0,h:-4,m:'🏭 Carbon fee: planet health -4.'}];let e=events[Math.floor(Math.random()*events.length)];p.cash+=e.v;if(e.h)health=Math.max(0,Math.min(100,health+e.h));log('🎲 '+p.name+': '+e.m);render();if(checkCollapse())return;setAction('Chance / Community event',e.m,[['Continue',finishTurn,true]])}
+}
+function roll(){if(finished||turn!==0||waiting)return;waiting=true;let a=1+Math.floor(Math.random()*6),b=1+Math.floor(Math.random()*6);$('dice').textContent=['⚀','⚁','⚂','⚃','⚄','⚅'][a-1]+' '+['⚀','⚁','⚂','⚃','⚄','⚅'][b-1];log('🎲 You rolled '+a+' + '+b+' = '+(a+b)+'.');waiting=false;move(players[0],a+b)}
+function aiTurn(){
+ if(finished)return;let p=players[1],a=1+Math.floor(Math.random()*6),b=1+Math.floor(Math.random()*6);$('dice').textContent=['⚀','⚁','⚂','⚃','⚄','⚅'][a-1]+' '+['⚀','⚁','⚂','⚃','⚄','⚅'][b-1];log('🤖 AI rolled '+a+' + '+b+' = '+(a+b)+'.');move(p,a+b);
+ if(!finished){let s=spaces[p.pos];if((s.t==='harm'||s.t==='good')&&!players.some(x=>x.owned.includes(p.pos))){let shouldBuy=s.t==='good'?p.cash>=s.p&&p.cash-s.p>=80:p.cash>=s.p+260;if(shouldBuy){p.cash-=s.p;p.owned.push(p.pos);health=Math.max(0,Math.min(100,health+s.h));log((s.h>0?'🌱':'⚠️')+' AI purchased '+s.name+' for '+fmt(s.p)+'. Planet health '+(s.h>0?'+':'')+s.h+'.');render();if(checkCollapse())return}}}
+ if(!finished)setTimeout(finishTurn,650)
+}
+$('roll').onclick=roll;$('restart').onclick=init;init();
+})();
+</script></body></html>
