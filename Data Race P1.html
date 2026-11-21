@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EcoPoly — Planetary Development</title>
+<title>Data Race — Planetary Development</title>
 <style>
 :root{color-scheme:dark;--bg:#10231d;--panel:#18352b;--line:#345447;--text:#eff8f1;--muted:#b4c8bb;--green:#32a879;--gold:#f2bd53}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#244d3d,#0d1c18 70%);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
@@ -18,10 +18,10 @@ h2{font-size:14px;letter-spacing:.7px;margin:18px 0 9px}.board{display:grid;grid
 </style>
 </head>
 <body><main>
-<header class="top"><div><div class="eyebrow">PLANETARY DEVELOPMENT SIMULATOR</div><div class="brand">🌎 ECO<span>POLY</span></div></div><div class="round">ROUND <strong id="round">1 / 10</strong></div></header>
+<header class="top"><div><div class="eyebrow">PLANETARY DEVELOPMENT SIMULATOR</div><div class="brand">🌎 DATA<span>RACE</span></div></div><div class="round">ROUND <strong id="round">1 / 10</strong></div></header>
 <section class="stats"><div class="stat"><small>Your capital</small><strong id="cash">$1,500</strong></div><div class="stat"><small>Your developments</small><strong id="assets">0</strong></div><div class="stat"><small>Planet health</small><strong id="health">70%</strong></div></section>
 <section class="panel health"><div class="healthhead"><span>🌱 Global environmental health</span><strong id="healthLabel">Stable</strong></div><div class="bar"><div class="fill" id="healthBar"></div></div><div class="healthfoot"><span>0% · Ecological collapse</span><span class="threshold">70% minimum to win</span><span>100% · Thriving</span></div></section>
-<h2>THE DEVELOPMENT BOARD</h2><section class="board" id="board"><div class="center" id="center"><div class="globe">🌍</div><h1>ECO POLY</h1><p>BUILD YOUR ECONOMY.<br>PROTECT YOUR PLANET.</p><p id="centerInfo">10 rounds · You vs. AI</p><div class="dice" id="dice">🎲 🎲</div></div></section>
+<h2>THE DEVELOPMENT BOARD</h2><section class="board" id="board"><div class="center" id="center"><div class="globe">🌍</div><h1>DATA RACE</h1><p>BUILD YOUR ECONOMY.<br>PROTECT YOUR PLANET.</p><p id="centerInfo">10 rounds · You vs. AI</p><div class="dice" id="dice">🎲 🎲</div></div></section>
 <section class="panel action"><h3 id="actionTitle">Welcome, developer!</h3><p id="actionText">Roll the dice to begin. Harmful industries generate recurring income at the start of each owner turn. Keep planetary health at or above 70% to qualify for victory.</p><div class="buttons" id="actionButtons"><button class="primary" id="roll">🎲 Roll dice</button></div></section>
 <section class="portfolio"><div class="panel"><h3>🔵 Your portfolio</h3><div id="youPortfolio" class="muted">No developments yet.</div></div><div class="panel"><h3>🔴 AI portfolio</h3><div id="aiPortfolio" class="muted">No developments yet.</div></div></section>
 <section class="panel" style="margin-top:12px"><h3 style="font-size:13px;margin:0 0 7px">📜 Development history</h3><div id="log" class="log" aria-live="polite"></div></section>
